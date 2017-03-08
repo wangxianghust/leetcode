@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <set>
+#include <vector>
 
 using namespace std;
 
@@ -31,8 +32,27 @@ int LengthOfLongestSubstring(string s){
     return ret;
 }
 
+int LengthOfLongestSubstring_2(string s){
+    vector<int> char_book(256, -1); //to remember every char first appeared index.
+    int size = s.size();
+    int max =0;
+    int idx = -1;
+    for(int i=0; i<size; ++i){
+        if(char_book[s[i]] > idx){
+            idx = char_book[s[i]];
+        }
+        if(i - idx > max){
+            max = i - idx;
+        }
+        char_book[s[i]] = i;
+    }
+    return max;
+}
+
 int main(){
     string s = "pwwkew";
 
     cout << LengthOfLongestSubstring(s) << endl;
+    cout << "---Another method---" << endl;
+    cout << LengthOfLongestSubstring_2(s) << endl;
 }
