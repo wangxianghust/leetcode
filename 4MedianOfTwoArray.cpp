@@ -2,6 +2,8 @@
 #include <climits>
 #include <vector>
 #include <algorithm>
+#include <cstdio>
+#include <string>
 
 using namespace std;
 
@@ -34,9 +36,44 @@ private:
     }
 };
 
+int trans(string &a){
+    int res = 0;
+    for(int i=0;i<a.size();i++)
+        res = res * 10 + a[i] - '0';
+    return res;
+}
+
+// customed split function for string process
+vector<string> split(const string &s, const string &delim) {
+	vector<string> res;
+	string::size_type front = 0;
+	string::size_type last = s.find_first_of(delim, front);
+	while (last != string::npos) {
+		if (last > front) {
+			string tmp = s.substr(front, last - front);
+			res.push_back(tmp);
+		}
+		front = last + 1;
+		last = s.find_first_of(delim, front);
+	}
+	if (last > front) {
+		res.push_back(s.substr(front, last - front));
+	}
+	return res;
+}
+
 int main(){
-    vector<int> nums1{1,2,3};
-    vector<int> nums2{4,5,6,7};
-    Solution Sol;
-    cout << Sol.findMedianSortedArrays(nums1, nums2) << endl;
+    //vector<int> nums1{1,2,3};
+    //vector<int> nums2{4,5,6,7};
+    freopen("4test.txt", "r", stdin);
+    string s;
+    getline(cin, s);
+    int cases = trans(s);
+    getline(cin , s);
+    auto ret = split(s, " ");
+    //vector<int> nums1(ret.size(), 0);
+    //for(auto &i : ) ret[] = trans(i);
+    //cout << cases << endl;
+    //Solution Sol;
+    //cout << Sol.findMedianSortedArrays(nums1, nums2) << endl;
 }
