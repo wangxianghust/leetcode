@@ -1,0 +1,7 @@
+6
+aab c*a*b
+ab  abc*
+abe a.e
+av .*
+abc abm*
+     .*
