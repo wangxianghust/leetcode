@@ -1,0 +1,7 @@
+3
+3
+abc abb abe
+4
+a bb d g
+2
+
