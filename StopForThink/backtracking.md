@@ -1,6 +1,6 @@
 ### ***BackTracking***
 ---
-https://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking.html
+**https://www.cis.upenn.edu/~matuszek/cit594-2012/Pages/backtracking.html**
 **概念**
 回溯在tree,graph上的实现是DFS，回溯可以使用递归实现（当然用stack）模拟生成也是可以的。
 
@@ -33,7 +33,7 @@ bool solve(Node n){
     }
     return false;
 }
-`` `
+```
 
 Some interesting founds:
 --
