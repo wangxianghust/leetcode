@@ -14,10 +14,12 @@ public:
         unordered_set<int> seen; //use seen to record nums have been added.hash function realize.
         vector<vector<int>> ret;
         int N = nums.size();
-        permute(nums, per, seen, ret, N);
+        //permute(nums, per, seen, ret, N);
+        permute(nums, N, ret, 0);
         return ret;
     }
 private:
+    //My first sight method
     void permute(vector<int> &nums, vector<int> &per, unordered_set<int> &seen, vector<vector<int>> &ret, int N){
         if(per.size() == N){  //the termination condition
             ret.push_back(per);  
@@ -31,6 +33,19 @@ private:
                 seen.erase(nums[i]);
                 per.pop_back();
             }
+        }
+    }
+
+    //From solution, a in-place and no set.
+    void permute(vector<int> &nums, int N, vector<vector<int> > &ret, int begin){
+        if(begin >= N){
+            ret.push_back(nums);
+            return;
+        }
+        for(int i=begin; i<N; ++i){
+            swap(nums[i], nums[begin]);
+            permute(nums, N, ret, begin+1);
+            swap(nums[i], nums[begin]);
         }
     }
 
