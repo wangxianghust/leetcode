@@ -1,3 +1,6 @@
+/*问题：将string分组，标准是包含相同char的string是一组
+ * 解法：unordered_map存储，key是排序后的string，value是和这个key相关的value，要用multiset存储
+ */
 #include <vector>
 #include <string>
 #include <algorithm>
