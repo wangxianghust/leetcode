@@ -12,20 +12,23 @@ public:
         int i=0;
         while(i < str.size() && str[i] == ' ') ++i;
         long long ret = 0;
-        if(i >= str.size()) return 0;
+        int size = str.size();
+        if(i >= size) return 0;
         int sign = 1;
         //--i;
         if(str[i] == '+'){
             sign = 1;
         } else if(str[i] == '-') {
             sign = -1;
+            if(size - i > 13) return INT_MIN;
         } else if('0' <= str[i] && str[i]<= '9'){
             sign = 1;
             ret = str[i] - '0';
         } else {
             return 0;
         }
-        while(i+1<str.size() && '0' <= str[++i] && str[i]<= '9'){
+        if(size - i > 13) return INT_MAX; //cause long string num, the long long may overflow.
+        while(i+1<size&& '0' <= str[++i] && str[i]<= '9'){
             int tmp = str[i] - '0';
             ret = ret*10 + tmp;
         }
