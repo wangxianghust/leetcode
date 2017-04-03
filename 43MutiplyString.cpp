@@ -21,7 +21,7 @@ public:
                 sum[i+j+1] = tmp%10 + '0';
                 carry = tmp/10;
             }
-            sum[i] += carry;
+            sum[i] += carry;  // 123 * 456 eg，此处依次计算 123*6，123*50，123*400 内层循环后，carry贡献到index=i;
         }
         auto index = sum.find_first_not_of('0');
         if(index != string::npos)return sum.substr(index);
