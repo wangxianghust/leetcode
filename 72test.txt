@@ -1,0 +1,6 @@
+5
+a abc
+wang xiang
+abcde abbdee
+abccba acccba
+test tst
