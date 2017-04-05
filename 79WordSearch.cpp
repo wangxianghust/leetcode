@@ -23,7 +23,7 @@ public:
                 //}
             }
         }
-        return ret;
+        return false;
     }
 
     bool dfs(vector<vector<char>> &board, int row, int col, int i, int j, int step, string word){
