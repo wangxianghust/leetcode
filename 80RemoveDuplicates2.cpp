@@ -5,6 +5,15 @@ using namespace std;
 
 class Solution {
 public:
+    int removeDuplicates_(vector<int> &nums){
+        int i = 0;
+        for(int num : nums){
+            if(i<2 || num > nums[i-2]){
+                nums[i++] = num;
+            }
+        }
+        return i;
+    }
     int removeDuplicates(vector<int> &nums){
         int size = nums.size();
         if(size == 0) return 0;
@@ -50,7 +59,7 @@ int main(){
             cin >> c;
             nums.push_back(c);
         }
-        cout << Sol.removeDuplicates(nums) << endl;
+        cout << Sol.removeDuplicates_(nums) << endl;
         print(nums);
     }
 }
