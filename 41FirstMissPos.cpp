@@ -1,4 +1,7 @@
 /*问题：首先要理解题意，在1~INT_MAX中，没有出现过的正整数。如1 3 4 --> 2   1 2 3 -->4  10 12-->1
+ * Solution: 问题的解决类似于桶排序，我们只考虑大小在1~size内的数字，其他不可能
+ * 然后，我们遍历数组，将每个ele放在它应该在的地方，eg, 3在nums[2], 1在nums[0],
+ * 第二次遍历数组，一旦发现 nums[i] != i+1, 则发现这个整数 i+1;
  */
 
 #include <iostream>
@@ -11,7 +14,16 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int size = nums.size();
+        for(int i=0; i<size; ++i){
+            while(nums[i]>0 && nums[i]<size && nums[nums[i]-1] != nums[i]) //ele is not at right place.
+                swap(nums[nums[i]-1], nums[i]);
+        }
+
+        for(int i=0; i<size; ++i){
+            if(nums[i] != i+1) return i+1;
+        }
         
+        return size+1;
     }
 };
 
