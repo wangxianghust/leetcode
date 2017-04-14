@@ -1,0 +1,4 @@
+3
+aaa aa
+abc a*
+abcdef a*d
