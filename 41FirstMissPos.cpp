@@ -14,6 +14,9 @@ class Solution {
 public:
     int firstMissingPositive(vector<int>& nums) {
         int size = nums.size();
+        //可以这样理解：每个元素所在位置是一个坑，现在要将合法的元素填到坑里
+        //while循环内是判断元素是否合法，由于每次执行while循环，要么swap后坑内元素不合法，要么第一次检测不合法直接跳过
+        //总之坑是有限的，最终会遍历完，同时由于while的存在，每一个合法的元素都进行了找坑。
         for(int i=0; i<size; ++i){
             while(nums[i]>0 && nums[i]<size && nums[nums[i]-1] != nums[i]) //ele is not at right place.
                 swap(nums[nums[i]-1], nums[i]);
