@@ -31,7 +31,7 @@
 模拟pow的预算，double pow(double base, int exp), 要考虑base=0, exp<0的情况，同时exp<0的情况，指数的运算可以使用优化，分exp奇数偶数计算一半即可。
 位运算的使用：exp << 1, exp & 0x1(判断奇偶性)
 
-```
+```cpp
 	class Solution {
 	public:
 	double myPow(double x, int n){
@@ -49,7 +49,7 @@
 重点是要考虑到大数的情况，LL也保存不下的那种 
 
 1. 用string保存，模拟加法，同时注意0123这样的要去除前导0
-* 回溯法，即求n个数字的全排列
+2. 回溯法，即求n个数字的全排列
 
 #### O(1)时间删除链表的一个节点
 给定的输入时head ptr 和 delete_node ptr
@@ -63,6 +63,48 @@
 求链表的中间节点：slow和fast指针，fast是slow的两倍，fast到尾巴时候，slow到中间
 
 判断是否有环：一个走一步，一个走两步，如果有环的话，肯定会相遇
+
+#### 树B是否是树A的子树
+两个递归函数，
+
+1.先查找root节点是否相同，相同的话再检测left，right subtree（用第二个递归函数），不同的话，递归的检测A->left和A->right是否包含B
+
+2.递归的边界条件是：B为NULL，TRUE， B!=NULL && A==NULL, false,   B->val != A->val false； 然后再递归调用该函数，使其左右子树都是相同的。
+
+## 第四章
+
+#### 二叉树的镜像
+其实就是不断的交换该二叉树的左右子树，递归
+
+边界条件是当前节点为NULL， return； 左右子树都为0，return
+然后递归寻找左右子树。  
+
+#### 包含min函数的栈
+题目需要设计一种新的数据结构，可以保持stack的特性，同时在O(1)的时间内返回stack中的min,
+这题的关键是添加一个辅助stack，这个stack的top在进行push操作时，push的当前所有元素的最小值，
+所以从0开始建立辅助stack，top一定都是最小值。
+
+#### 判断stack的压入和弹出序列是不是同一个过程
+建立一个辅助stack，重点在于看pop序列，如果下一个pop是stack.top,则直接弹出，否则的话，继续压栈直到找到这个元素（没找到为false）
+
+#### 层次遍历二叉树
+deque模型，先root进入queue
+
+```cpp
+	while(queue){
+		visit front = queue.front;
+		queue.pop_front();
+		if(front->left) queue.push(left);
+		if(front->right)queue.push(right);
+	}
+```
+
+#### BST的后序遍历是否合法
+递归，先找root节点，判断；递归处理左右子树。
+传递参数（vector<int> sequence, int length）, length 指代的是子树的长度
+
+#### 二叉树中的和是target的path
+回溯法，path保存路径，cur_sum和target比较，paths保存全路径，判断在到达叶子节点的时候，是否满足target，如果不是leaf，不断的添加左右孩子节点。
 
 
 
