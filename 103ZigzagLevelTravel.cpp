@@ -1,4 +1,4 @@
-/*Level Order visit the tree
+/*Zigzag Order visit the tree
  * just simulation
  * Iteration: Use queue to push the node, and add NULL on the end of every level.
  */
