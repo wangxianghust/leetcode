@@ -112,7 +112,7 @@ deque模型，先root进入queue
 1. 对于每一个数字，求其中的1的个数（通过不断的mod和/）,复杂度n*lgn,太高不考虑
 2. 对数字的规律进行观察，从高位到低位，不断的计算每个十进制位中1的数量，递归调用（技巧：将数字转化为string, f方便处理），注意是统计1的个数，不是排列组合。公式：
 	a. 先求最高位中1的数量：	
-	当1出现在高位时，去掉最高为加1（如123，共有100~123，计为24个），当最高位大于1时，为pow(10,len-1), 如（213，共有100~199，最高位共计100个1）
+	当1出现在高位时，去掉最高为加1（如123，共有100\~123，计为24个），当最高位大于1时，为pow(10,len-1), 如（213，共有100\~199，最高位共计100个1）
 	b. 除最高位剩下位置中1的个数： 
 	```cpp
 	FirstData*(len-1)*pow(10,len-2)
@@ -155,12 +155,39 @@ Solution：使用string保存
 #### 35.第一个只出现一次的字符
 查找次数，重复等相关的需要想到hash map，如unordered_map(基于hash实现)，当然也可以自己定义hash函数，由于字符，用256个可以保存 
 	```cpp
-		const int tableSize = 256;
-		unsigned int hashTable[tableSize];
-		...
-		hashTable[*(pHashKey)]++;
+	const int tableSize = 256;
+	unsigned int hashTable[tableSize];
+	...
+	hashTable[*(pHashKey)]++;
 	```
 	
 #### 36. 查找数组中的逆序对
 和merge sort很像，每次比较后，我们记录顺序，防止重复计算。
-assume left_arr and right_arr are sorted, we use the pointer l from end of left_arr and r from end of right_arr, if left_arr[l] > right_arr[r], the inveser_pairs come, and the number is num = r - right_arr.start_index + 1, AND we should save the ordered array.
+assume left_arr and right_arr are sorted, 
+
+we use the pointer l from end of left_arr and r from end of right_arr, 
+
+if left_arr[l] > right_arr[r], the inveser_pairs come, and the number is num = r - right_arr.start_index + 1, AND we should save the ordered array.
+
+#### 37.两个链表的第一个公共节点
+Assume list A length is m, list B is n. assume m > n.
+
+let A go (m-n) step, then let A and B go together, find first same node is the first same node.
+
+观察两个list交叉后，那么其后面的节点必定都是重合的，所以先让长的节点先走（m-n）,然后两个list一起走，最先遇到的就是第一个公共节点。
+
+#### 38.数字在排序数组中出现的次数
+即对于一个排序的数组，使用二分查找法找到一个数字出现的开始位置和结束位置。
+eg. 查找开始的位置，A[mid] < target 右半 or A[mid] > target 左半
+A[mid] == target, if A[mid-1] == target, 继续左半，直至找到
+
+同理查找结束的位置
+
+#### 39.二叉树的深度
+使用递归即可
+
+拓展：判断一棵树是不是平衡树（任意节点的左右子树深度差不超过1）
+
+1. 从root向下，计算root->left, root->right, 比较即可判断root节点的左右子树是否平衡，然后递归判断left-child是不是平衡节点，right-child是不是平衡节点，这个方法有着大量的重复计算
+
+2. 后序遍历，先根据左右节点的深度判断是不是平衡的，并得到当前节点的深度，最后遍历到树的根节点即可判断。
