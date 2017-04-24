@@ -160,3 +160,7 @@ Solution：使用string保存
 		...
 		hashTable[*(pHashKey)]++;
 	```
+	
+#### 36. 查找数组中的逆序对
+和merge sort很像，每次比较后，我们记录顺序，防止重复计算。
+assume left_arr and right_arr are sorted, we use the pointer l from end of left_arr and r from end of right_arr, if left_arr[l] > right_arr[r], the inveser_pairs come, and the number is num = r - right_arr.start_index + 1, AND we should save the ordered array.
