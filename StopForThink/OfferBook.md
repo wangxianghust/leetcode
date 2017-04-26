@@ -176,6 +176,7 @@ let A go (m-n) step, then let A and B go together, find first same node is the f
 
 观察两个list交叉后，那么其后面的节点必定都是重合的，所以先让长的节点先走（m-n）,然后两个list一起走，最先遇到的就是第一个公共节点。
 
+## 第六章
 #### 38.数字在排序数组中出现的次数
 即对于一个排序的数组，使用二分查找法找到一个数字出现的开始位置和结束位置。
 eg. 查找开始的位置，A[mid] < target 右半 or A[mid] > target 左半
@@ -218,3 +219,81 @@ eg, 求和为15的 1+2+3+4+5 = 4+5+6 = 7+8 = 15
 2. 动态规划，可以看出 f(n) = f(n-1) + f(n-2) + f(n-3) + f(n-4) + f(n-5) + f(n-6), 因此只需要知道前6个状态即可。
 
 #### 44. 扑克牌的顺序
+问题是求5张牌是不是连续的，大小王0可以替换成任何的牌
+
+先排序，再统计0的个数，再统计相邻数字间的空缺数，如果空缺的总数小于等于0的个数，可以，or不可以。
+
+#### 45.圆圈中最后剩下的数字
+0,1...n-1这n个数字排成一个圆圈，从数字0开始从圆圈里删除第m个数字，求圆圈里剩下的最后一个数字。
+
+1. 很显然的使用一个圆环链表就可以，不过如果不能使用stl,需要自己构圆环链表，就是走到end的时候，再返回到begin，核心代码如下：
+	```cpp
+	while(numbers.size() > 1){
+		for(int i=0; i<m; ++i){
+			current++;
+			if(current == numbers.end())
+				current = numbers.begin();
+		}
+		list<int>::iterator next = ++current;
+		if(next == numbers.end())
+			next = numbers.begin();
+		--current;
+		numbers.erease(current);
+		current = next;
+	}
+	```
+	
+2. 数学分析，找出了一个递推公式
+	n=1, f(n,m) = 0;	n>1, f(n,m) = (f(n-1, m) + m) % n;
+	使用循环的核心代码
+	```cpp
+	int last = 0；
+	for（int i=0; i <= n; ++i）{
+		last = (last+m) % i;
+	}
+	```
+
+#### 46.求1+2+...+n
+题目要求数列和，同时不能使用for,while循环等条件
+
+1. 可以使用构造函数
+
+#### 47.不用加减乘除的加法
+使用位运算，先计算a^b,第一步计算加法，不计算进位；在计算a&b << 1, 计算进位；递归调用相加。
+	```cpp
+	int Add(int num1, int num2){
+		int sum, carry;
+		do{
+			sum = sum1 ^ sum2;
+			carry = (num1 & num2) << 1;
+			num1 = sum;
+			num2 = carry;
+		} while (num2 != 0)		
+		return num1;
+	}
+	```
+	
+#### 48.不能继承的类
+C++ 没有不能继承的关键字，先要求提供一个不能继承的类。
+将constructor 和 destructor设置为private，然后public下new 和 delete这个类。
+
+## 第七章
+#### 49.实现atoi
+这题的含义是需要考虑到各个不同的输入情况
+如+ -开始的情况，正负溢出的情况，字符串是否为空的情况，等，再进行转化的处理。
+
+#### 50.树中两个节点的最低公共祖先
+1. 如果是BST
+进行大小查找，比两个数大的话，向右，反之，向左；直到找到第一个介于两个数之间的节点。
+
+2. 普通的树
+是否有指向父节点的指针，如果有，转化为两个链表找第一个公共节点
+如果没有，那么从root遍历，找到达目的节点的path,在找到从root开始的两条path最后一个相同的元素就是。
+
+其中从root遍历找target node,是一个递归过程；
+
+## 第八章
+#### 51. 数组中重复的数字
+长度为n的数组，数字都在0~n-1,求重复的数字
+可以hash,不过需要O(n)的空间，怎么办？
+
