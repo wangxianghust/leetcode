@@ -295,5 +295,117 @@ C++ 没有不能继承的关键字，先要求提供一个不能继承的类。
 ## 第八章
 #### 51. 数组中重复的数字
 长度为n的数组，数字都在0~n-1,求重复的数字
-可以hash,不过需要O(n)的空间，怎么办？
+可以hash,不过需要O(n)的空间，怎么办？注意每个数字i必须在index为i-1的位置上，那么检测每个A[i]（0<A[i]<n-1）,将其和A[A[i]]比较，不同就交换，将A[i]放在合适的位置上。再对A[i]进行这样的处理，直到找到一个重复的数字。
 
+#### 52.构建乘积数组
+给定A[n], 求B[n], 其中 B[i] = A[0]*A[1]...A[i-1] * A[i+1] * ... A[n],要求不能使用除法
+
+暴力求解的方法是O(n^2)，不过明显可以使用动态规划，
+
+用before[i]表示i前面数字的乘积，则before[i+1] = before[i] * A[i];
+
+用after[i]表示从末尾开始的乘积，则after[i-1] = after[i] * A[i];
+
+则 ret[i] = before[i] * after[i]; 时间复杂度O(n),空间复杂度O(n).
+
+#### 53.正则表达式匹配
+关于. * 的匹配，递归，重点考虑的a* 的情况，将 a\*看成一个字符来处理
+	```cpp
+	bool match(char* str, char* pattern){
+		//border case...
+		//mach case
+		if(*str == '\0' && *pattern == '\0) return true;
+		if(*str != '\0' && *pattern == '\0) return false;
+		if(*(pattern+1) == '*'){
+			if(*pattern == '.' || *pattern == *str){
+			//three case, a* match nothing, a* match a 
+			//and stay state, a* match a and go next state.
+				return match(str, pattern+2)
+				|| match(str+1, pattern+2)
+				|| match(str+1, pattern);
+			} else {
+				return match(str, pattern+2);
+			}
+		}
+		if(*pattern == '.' || *pattern == *str){
+			return match(str+1, pattern+1);
+		}
+	}
+	```
+	
+#### 54.表示数值的字符串
+要考虑的正负号，指数，小数等情况，关键是剥离出几个模块，
+一个是scanDigits用于扫描是不是数字，一个是isExponential(string &str),判断e或E出现之后的字符是否合法。
+
+#### 55.字符流中第一个不重复的字符
+可以使用stl的unordered_map进行hash,但还是自己构建一个hash表吧，int occurence[256], 初始化为-1，重复出现赋值为-2，出现一次保存其index。最后从0开始扫描，得到第一个 >= 0的数值即可。
+
+#### 56.链表中环的入口节点
+一个链表中包含环，求出环的入口节点
+这题的解法很多，先列举几个
+
+1. 增加空间：一次访问各个节点，如果一个节点第一次被再访问，那么就是入口节点，set<node> nodes, 不断的向nodes中添加节点，直到遇到一个重复的
+2. O(n)，但是破坏链表，用pre,cur两个指针遍历，一旦node被visited,将node->next = null, 继续直到访问到最后一个节点就是环的入口节点。
+3. tricky
+	a. 首先判断有没有环，然后找到环中的一个节点，方法：
+	slow 和 fast两个指针，slow每次一步，fast每次两步，如果有环，两个指针必定相遇，且相遇节点在环内；
+	b. 假设环的长度是y，则让p1先走y步，然后p2指向head指针，p1,p2一起走，第一次的相遇节点就是环的入口节点。理由是，可以想象非圈节点个数是x,总个数是n。
+	
+#### 57.删除链表中的重复节点
+链表的简单操作，注意设置一个dummy节点指向head节点，为了防止head也是重复的节点需要被删除。
+
+#### 58.二叉树的下一个节点
+求在中序遍历情况下，给定一个节点，求这个节点的下一个节点。（题设给了每个节点的parent指针）
+
+解决的方案是模拟中序遍历的下一个节点过程，分为三个方向：
+
+a. 节点有right child, 寻找right child中的left--most node.
+b. 节点无right child && node == parent.left,则parent是next
+c. 节点无right child && node == parent.right, 则向上回溯，直到找到一个节点满足 node == parent.left
+
+
+#### 59.对称的二叉树
+判断一棵树是不是镜像对称的
+
+简单的递归，入口判断条件是，left,right为NULL的各种判断，以及节点value是否相等，然后再递归判断左右子树是否是对称的。
+
+#### 60.层序遍历
+用queue保存即可，每次访问一个节点之后，pop,每次访问第n层节点的时候，在上一步先统计出该层节点的个数（即当时queue.size();
+
+#### 61.zig-zag层序遍历
+可以使用deque
+可以双stack
+
+#### 62.序列化二叉树
+序列化：就是简单的前序遍历
+
+反序列化：同样的，对于有value的节点，先构造该节点并默认节点的左右子树为NULL，然后递归构造左右子树。反序列化的code如下：
+进位；递归调用相加。
+	```cpp
+	void Deserialize(BinaryTreeNode** pRoot, istream& stream){
+		int number;
+		if(ReadStream(stream, &number)){
+			*pRoot = new BinaryTreeNode();
+			(*pRoot)->m_nValue = number;
+			(*pRoot)->m_left = NULL;
+			(*pRoot)->m_right = NULL;
+			Deserialize(& ((*pRoot)->m_left), stream);
+			Deserialize(& ((*pRoot)->m_right), stream);
+		}
+	}
+	```
+	
+#### 63.BST的第k个节点
+InOrder travel就是按顺序排列的，所以按照InOrder travel到第k个节点即可，计数模块在原来print(root->val)部分；
+进位；递归调用相加。
+	```cpp
+	Node* KNode(Node* root, int &k){
+		target = NULL;
+		if(root->left) target = KNode(root->left, k);
+		if(target == NULL) {
+			if(k == 1) target = root;
+			k--;
+		} 
+		if(root->right) target = KNode(root->right, k);
+	}
+	```
