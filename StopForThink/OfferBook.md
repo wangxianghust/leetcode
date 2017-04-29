@@ -9,8 +9,12 @@
 #### 重建二叉树
 给定二叉树的前序和中序遍历，求构建完整的二叉树
 
-前序遍历确定根节点，再拿到中序遍历里面，确定左右子树； 对以上程序递归调用。
+前序遍历确定根节点，再拿到中序遍历里面，确定左右子树； 对以上程序递归调用。重点是确定递归函数是什么样的？
 
+递归函数调用的是子树的PreOrder和InOrder序列,注意的是如果是一个节点要return root， 在left_tree length > 0 方可构建左子树，同理对待右子树。
+```cpp
+TreeNode* construct(vector<int> &preorder, int pre_s, int pre_e, vector<int> &inorder, int in_s, int in_e)
+```
 #### 位运算
 求一个数转化为二进制，其中1的个数
 
