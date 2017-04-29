@@ -55,7 +55,7 @@ TreeNode* construct(vector<int> &preorder, int pre_s, int pre_e, vector<int> &in
 1. 用string保存，模拟加法，同时注意0123这样的要去除前导0
 2. 回溯法，即求n个数字的全排列
 
-#### O(1)时间删除链表的一个节点
+#### 13.O(1)时间删除链表的一个节点
 给定的输入时head ptr 和 delete_node ptr
 
 既然给的是ptr,我们可以直接把delete_node->next 的val 赋值给delete_node,再进行删除。
