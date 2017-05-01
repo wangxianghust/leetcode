@@ -76,7 +76,8 @@ TreeNode* construct(vector<int> &preorder, int pre_s, int pre_e, vector<int> &in
 2.递归的边界条件是：B为NULL，TRUE， B!=NULL && A==NULL, false,   B->val != A->val false； 然后再递归调用该函数，使其左右子树都是相同的。
 
 ## 第四章
-
+#### 顺时针打印矩阵
+设置left，right，top，bottom四个变量作为边界进行打印，每次都要更新边界的情况。
 #### 20.二叉树的镜像
 其实就是不断的交换该二叉树的左右子树，递归
 
@@ -109,6 +110,13 @@ deque模型，先root进入queue
 
 #### 25.二叉树中的和是target的path
 回溯法，path保存路径，cur_sum和target比较，paths保存全路径，判断在到达叶子节点的时候，是否满足target，如果不是leaf，不断的添加左右孩子节点。
+
+#### 26.复杂链表的复制
+复杂链表定义：不仅是一个链表，每个节点还有任意指向的兄弟。
+
+1. 先复制链表，在遍历寻找另一个兄弟，O(n*n)
+2. 用一个O(n)的hash表进行映射，eg S-->S‘,则空间为O(n),时间为O(n)
+3. 将复制后的节点插入原节点的后面，这样另一个兄弟的寻找是O(1), 因为S'恰好在S后面，处理完后再将两个链表分开。
 
 #### 27.二叉搜索树转为双向链表
 中序遍历，递归，将原BST的left当做prev指针，right当做next指针。对于一个BST的处理方法是，root->left = left-subtree中的right-most节点，root->right = right-subtree中的left-most节点。
