@@ -77,21 +77,21 @@ TreeNode* construct(vector<int> &preorder, int pre_s, int pre_e, vector<int> &in
 
 ## 第四章
 
-#### 二叉树的镜像
+#### 20.二叉树的镜像
 其实就是不断的交换该二叉树的左右子树，递归
 
 边界条件是当前节点为NULL， return； 左右子树都为0，return
 然后递归寻找左右子树。  
 
-#### 包含min函数的栈
+#### 21.包含min函数的栈
 题目需要设计一种新的数据结构，可以保持stack的特性，同时在O(1)的时间内返回stack中的min,
 这题的关键是添加一个辅助stack，这个stack的top在进行push操作时，push的当前所有元素的最小值，
 所以从0开始建立辅助stack，top一定都是最小值。
 
-#### 判断stack的压入和弹出序列是不是同一个过程
+#### 22.判断stack的压入和弹出序列是不是同一个过程
 建立一个辅助stack，重点在于看pop序列，如果下一个pop是stack.top,则直接弹出，否则的话，继续压栈直到找到这个元素（没找到为false）
 
-#### 层次遍历二叉树
+#### 23.层次遍历二叉树
 deque模型，先root进入queue
 
 ```cpp
@@ -103,12 +103,16 @@ deque模型，先root进入queue
 	}
 ```
 
-#### BST的后序遍历是否合法
+#### 24.BST的后序遍历是否合法
 递归，先找root节点，判断；递归处理左右子树。
 传递参数（vector<int> sequence, int length）, length 指代的是子树的长度
 
-#### 二叉树中的和是target的path
+#### 25.二叉树中的和是target的path
 回溯法，path保存路径，cur_sum和target比较，paths保存全路径，判断在到达叶子节点的时候，是否满足target，如果不是leaf，不断的添加左右孩子节点。
+
+#### 27.二叉搜索树转为双向链表
+中序遍历，递归，将原BST的left当做prev指针，right当做next指针。对于一个BST的处理方法是，root->left = left-subtree中的right-most节点，root->right = right-subtree中的left-most节点。
+注意判断left是否为null的情况，递归调用即可。
 
 ## 第五章
 #### 32.从1到n个整数中，求1出现的次数
