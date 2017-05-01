@@ -16,7 +16,7 @@ public:
         return ret;
     }
 private:
-    void combine(int n, int k, vector<vector<int> > &ret, vector<int> &combination, int start){
+    void combine(int n, int k, vector<vector<int> > &ret, vector<int> combination, int start){
         if(k == 0){
             ret.push_back(combination);
             //combination.clear();
@@ -28,6 +28,8 @@ private:
             combine(n, k-1, ret, combination, i+1);
             combination.pop_back();
         }
+        print(ret);
+        cout << "----" << endl;
     }
 public:
     void print(vector<vector<int> > ret){
