@@ -15,7 +15,7 @@ public:
     }
 
 private:
-    void subsets(vector<int> &nums, vector<int> &sub, vector<vector<int> > &ret, int begin){
+    void subsets(vector<int> &nums, vector<int> sub, vector<vector<int> > &ret, int begin){
         ret.push_back(sub);
         for(int i=begin; i<nums.size(); ++i){
             if(i==begin || nums[i] != nums[i-1]){
