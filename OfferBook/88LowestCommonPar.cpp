@@ -16,7 +16,7 @@ using namespace std;
           this->val = val;
           this->left = this->right = NULL;
       }
-  }
+  };
  
 class Solution {
 public:
@@ -30,13 +30,19 @@ public:
         vector<TreeNode*> A_set, B_set;
         pathSet(root, A, A_set);
         pathSet(root, B, B_set);
+        for(auto i : A_set) cout << i->val << " ";
+        cout << endl;
+        for(auto i : B_set) cout << i->val << " ";
         int i=0;
         while(i<A_set.size() && i<B_set.size() && A_set[i] == B_set[i]) ++i;
         if(i == A_set.size()) return A_set.back();
         if(i == B_set.size()) return B_set.back();
+        
         return A_set[i-1];
     }
 private:
+    //This method has logic error, cause even if we get the true path, we will run too, wrong.
+    /*
     void pathSet(TreeNode* root, TreeNode* to_find, vector<TreeNode*> &path){
         if(root == NULL) return;
         if(root == to_find){
@@ -46,11 +52,11 @@ private:
         path.push_back(root);
         if(root->left) pathSet(root->left, to_find, path);
         if(root->right) pathSet(root->right, to_find, path);
-        path.pop_back();
+        //path.pop_back();  //If want this code right, we should pop_back, cause only when we put the wrong node, we can do it.
     }
+    */
 
     //why follow is ok, but top is not.
-
     bool pathSet(TreeNode* root, TreeNode* to_find, vector<TreeNode*> &path){
         if(root == NULL) return false;
         if(root == to_find){
@@ -64,3 +70,17 @@ private:
         return false;
     }
 }; 
+
+int main(){
+    TreeNode* root = new TreeNode(1);
+    TreeNode* r = new TreeNode(2);
+    TreeNode* rr = new TreeNode(3);
+    TreeNode* rrr = new TreeNode(4);
+    TreeNode* rrrr = new TreeNode(5);
+    root->right = rr;
+    root->left = r;
+    //rr->right = rrr;
+    //rrr->right = rrrr;
+    Solution Sol;
+    cout << Sol.lowestCommonAncestor(root, rr, r)->val << endl;
+}

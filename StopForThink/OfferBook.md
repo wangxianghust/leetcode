@@ -310,7 +310,7 @@ C++ 没有不能继承的关键字，先要求提供一个不能继承的类。
 是否有指向父节点的指针，如果有，转化为两个链表找第一个公共节点
 如果没有，那么从root遍历，找到达目的节点的path,在找到从root开始的两条path最后一个相同的元素就是。
 
-其中从root遍历找target node,是一个递归过程；
+其中从root遍历找target node,是一个递归过程；bool find(root, to_find, vector<node*> &path), here we return the bool, if got, return true else path.pop_back() and return false.
 
 ## 第八章
 #### 51. 数组中重复的数字
