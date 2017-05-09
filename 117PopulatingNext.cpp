@@ -18,7 +18,7 @@ public:
         TreeLinkNode* now(root), *head(NULL), *tail(NULL);
         while(now){
             if(now->left){
-                if(!tail)head = tail = now->left; //this is the start of new level;
+                if(!tail)head = tail = now->left; //this is the start of new level
                 else tail = tail->next = now->left;
             }
             if(now->right){
