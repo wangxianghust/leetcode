@@ -1,0 +1,9 @@
+#Write a SQL query for a report that provides the following information for each person in the Person table, 
+regardless if there is an address for each of those people
+根据描述，这是一个left-join，就是会从左表返回所有的行，即使右表没有匹配的。
+
+SELECT FirstName, LastName, City, State
+FROM Person
+LEFT JOIN Address
+ON Person.PersonId = Address.PersonId;
+

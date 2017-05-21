@@ -1,0 +1,24 @@
+#从Employee table中找出Salary 第二大的记录，没有则return null
+#Solution: 1. MAX(Salary)可以求最大的，那只要寻找比最大的小的即可
+
+http://blog.csdn.net/hudashi/article/details/7451584
+# SELECT * FROM table  LIMIT [offset,] rows | rows OFFSET offset
+# 当省略offset的时候，offset作为0处理，表示提取查询到的前rows条数据；
+# 当offset>=0时候，表示提取查询到的从offset开始的rows条数据；此时如果rows<0表示提取查询到的从offset开始的所有数据
+# 当offset<0的时候，表示提取查询到的除出后rows条数据的所有数据，即剔除last row-rows到last rows之间的-rows条数据
+# 另外，如果rows大于实际查询的数据条数，则取rows为实际查询的数据条数。
+
+ SELECT(
+ SELECT DISTINCT Salary
+ FROM Employee
+ ORDER BY Salary Desc
+ LIMIT 1 OFFSET 1
+ ) AS SecondHighestSalary;
+
+#Soluiton 2 下面这个OJ有语法错误，搞不懂
+
+ SELECT 
+ MAX(Salary) (
+ FROM Employee
+ WHERE Salary < (SELECT MAX(Salary) FROM Employee) )
+ AS SecondHighestSalary;
