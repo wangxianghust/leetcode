@@ -46,10 +46,10 @@ public:
         set<string> ret;
         vector<string> ret_vec;
         if(board.size() == 0 || board[0].size() == 0) return ret_vec;
-        vector<pair<int,int>> direc{ {1,1},{1,-1},{-1,1},{-1,-1} };
+        vector<pair<int,int>> direc{ {1,0},{-1,0},{0,1},{0,-1} };
         for(int i=0; i<board.size(); ++i){
             for(int j=0; j<board[0].size(); ++j){
-                findWords(board, root, "", ret, 0, 0, direc);
+                findWords(board, root, "", ret, i, j, direc);
             }
         }
         for(string s : ret) ret_vec.push_back(s);
@@ -60,10 +60,12 @@ private:
         if(x<0 || x>=board.size() || y<0 || y>=board[0].size() || board[x][y] == 'X') return ; //'X'代表访问过了
         if(root->children[ board[x][y]-'a' ] != NULL){
             char c = board[x][y];
-            board[x][y] = 'X';
-            root = root->children[ board[x][y]-'a' ];
+            //cout << c << endl;
             word.push_back(c);
+            //cout << "-w " << word << endl;
+            root = root->children[ board[x][y]-'a' ];
             if(root->is_leaf) ret.insert(word);
+            board[x][y] = 'X';
             for(auto d : direc){
                 findWords(board, root, word, ret, x+d.first, y+d.second, direc);
             }
@@ -74,5 +76,13 @@ private:
 
 int main(){
     Solution Sol;
-
+    vector<string> words = {"oath","pea","eat","rain"};
+    vector<vector<char>> board = {
+    {'o','a','a','n'},
+    {'e','t','a','e'},
+    {'i','h','k','r'},
+    {'i','f','l','v'}
+    };
+    vector<string> ret = Sol.findWords(board, words);
+    for(string s : ret) cout << s << endl;
 }
