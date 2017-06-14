@@ -32,29 +32,43 @@ public:
         }
         return sta.top();
     }
-private:
+public:
     string suffix(string &s){
         int size = s.size();
         string suf;
         stack<char> oper;
         for(int i=0; i<size; ++i){
-            if(s[i] == ' ')continue;
-            if(s[i] >= '0' && s[i] <= '9') suf.push_back(s[i]);
-            if(s[i] == '(') {
-                while(s[i++] != ')'){
-                    if(s[i] >= '0' && s[i] <= '9') suf.push_back(s[i]);
-                    if(s[i] == '-' || s[i] == '+') oper.push(s[i]);
-                    //++i;
-                }
-            }
-            if(s[i] == ')'){
-                while(!oper.empty()){
+            char now = s[i];
+            switch(now){
+                case ' ' : continue;
+                case '(' : oper.push(now); break;
+                case ')' : 
+                           while(oper.top() != '('){
+                               char t = oper.top();
+                               suf.push_back(t);
+                               oper.pop();
+                           }
+                           oper.pop();
+                           break;
+                case '+':
+                case '-':
+                           oper.push(now); break;
+                default:suf.push_back(now); break;
+                           
+            }            
+        }
+        while(!oper.empty()){
                     char top = oper.top();
                     oper.pop();
                     suf.push_back(top);
                 }
-            }
-        }
         return suf;
     }
 };
+
+int main(){
+    Solution Sol;
+    string s = " 2-1 + 2 ";
+    cout << Sol.suffix(s) << endl;
+    cout << Sol.calculate(s) << endl;
+}
