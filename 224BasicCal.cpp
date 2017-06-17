@@ -13,21 +13,29 @@ class Solution {
 public:
     int calculate(string s) {
         string suf = suffix(s);
-        stack<int> sta;
+        stack<long> sta;
+        int num = 0;
         for(int i=0; i<suf.size(); ++i){
-            if(s[i] >= '0' && s[i] <= '9') sta.push(s[i]-'0');
-            else if(s[i] == '+'){
+            if(isdigit(suf[i])) {
+                num = num*10 + suf[i]-'0';
+            } else if (suf[i] == '$'){
+                sta.push(num);
+                num = 0;
+            }
+            else if(suf[i] == '+'){
                 int op1 = sta.top();
                 sta.pop();
                 int op2 = sta.top();
                 sta.pop();
-                sta.push(op1+op2);
-            } else if(s[i] == '-'){
+                sta.push(op2+op1);
+            } else if(suf[i] == '-'){
                 int op1 = sta.top();
                 sta.pop();
                 int op2 = sta.top();
                 sta.pop();
-                sta.push(op1-op2);
+                sta.push(op2-op1);
+            } else {
+                cout << s[i] << "-->" << i << "Error Input" << endl;
             }
         }
         return sta.top();
@@ -39,6 +47,7 @@ public:
         stack<char> oper;
         for(int i=0; i<size; ++i){
             char now = s[i];
+            //cout << now << endl;
             switch(now){
                 case ' ' : continue;
                 case '(' : oper.push(now); break;
@@ -47,14 +56,26 @@ public:
                                char t = oper.top();
                                suf.push_back(t);
                                oper.pop();
+                               //cout << t << "--" << endl;
                            }
+                           //cout << suf << "->" << endl;
                            oper.pop();
                            break;
                 case '+':
                 case '-':
-                           oper.push(now); break;
-                default:suf.push_back(now); break;
-                           
+                           while(!oper.empty()){
+                               char t = oper.top();
+                               if(priority(t) >= priority(now)){
+                                    suf.push_back(t);
+                                    oper.pop();
+                                    //t = oper.top();
+                               } else break;
+                           }
+                           oper.push(now);
+                           break;
+                default: suf.push_back(now); 
+                         if(i+1==size || !isdigit(s[i+1])) suf.push_back('$');
+                         break; //default is number. 由于要判定123是123不是1，2，3
             }            
         }
         while(!oper.empty()){
@@ -64,11 +85,24 @@ public:
                 }
         return suf;
     }
+private:
+    int priority(char t){
+        switch(t){
+            case '+' : return 1;
+            case '-' : return 1;
+            default : return 0;
+        }
+    }
+    bool isdigit(char c){
+        return c >= '0' && c <= '9';
+    }
 };
 
 int main(){
     Solution Sol;
-    string s = " 2-1 + 2 ";
+    string s = " 12-1 + 22 + (3+2)";
+    s = "2147483647";
     cout << Sol.suffix(s) << endl;
+    cout << "suffix is ok" << endl;
     cout << Sol.calculate(s) << endl;
 }
