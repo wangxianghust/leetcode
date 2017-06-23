@@ -2,6 +2,11 @@
  * Solution：直观的，采用中序遍历
  */
 
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
   struct TreeNode {
       int val;
       TreeNode *left;
@@ -13,17 +18,21 @@ class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
         count = k;
-        return inOrder(root);
+        ret = 0;
+        inOrder(root);
+        return ret;
     }
 
-    int inOrder(TreeNode* root){
+    void inOrder(TreeNode* root){
         if(root){
             if(root->left) inOrder(root->left);
             count--;
-            if(count == 0) return root->val;
+            cout << root->val << "--" << count << endl;
+            if(count == 0) {ret = root->val; return;}
             if(root->right) inOrder(root->right);
         } 
     }
 private:
     int count;
+    int ret;
 };
