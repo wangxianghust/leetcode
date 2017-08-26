@@ -9,6 +9,18 @@ using namespace std;
 
 class Solution {
 public:
+    int maxSubArray_(vector<int> & nums){
+        int size = nums.size();
+        int ret = INT_MIN;
+        int sum_tmp = 0;
+        for(int i=0; i<size; ++i){
+            sum_tmp += nums[i];
+            ret = max(ret, sum_tmp);
+            if(sum_tmp < 0) sum_tmp = 0;
+        }
+        return ret;
+    }
+
     int maxSubArray(vector<int>& nums) {
         int low = 0;
         int high = nums.size()-1;
