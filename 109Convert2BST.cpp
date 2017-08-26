@@ -17,3 +17,35 @@ struct TreeNode {
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
 };
 
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+class Solution {
+public:
+    TreeNode* sortedListToBST(ListNode* head) {
+        return sortedListToBST(head, NULL);
+    }
+
+private:
+    TreeNode* sortedListToBST(ListNode*head, ListNode*tail){
+        if(head == tail){
+            return NULL;
+        }
+        if(head->next == tail){
+            TreeNode* root = new TreeNode(head->val);
+            return root;
+        }
+        ListNode* mid=head, *tmp=head;
+        while(tmp!=NULL && tmp->next !=NULL){
+            tmp = tmp->next->next;
+            mid = mid->next;
+        }
+        TreeNode* root = new TreeNode(mid->val);
+        root->left = sortedListToBST(head, mid);
+        root->right = sortedListToBST(mid->next, tmp);
+        return root;
+    }
+};
