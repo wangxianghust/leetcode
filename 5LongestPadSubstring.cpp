@@ -37,9 +37,6 @@ public:
                 }
             }
         }
-        if(maxLen > 2){
-
-        }
         return s.substr(maxLeft, maxLen);
     }
 };
