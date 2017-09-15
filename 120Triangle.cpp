@@ -5,12 +5,21 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
 class Solution {
 public:
     int minimumTotal(vector<vector<int>>& triangle) {
-        
+        int size = triangle.size();
+        if(size < 1) return -1;
+        vector<int> path(triangle.back());
+        for(int level=size-2; level>=0; --level){
+            for(int i=0; i<=level; ++i){
+                path[i] = triangle[level][i] + min(path[i+1], path[i]);
+            }
+        }
+        return path[0];
     }
 };
