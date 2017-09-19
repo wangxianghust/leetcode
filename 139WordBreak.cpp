@@ -5,9 +5,33 @@
  * 思路二：BFS，queue<int> 保存访问的index, unordered_set<int> 保存访问过的节点继续被访问，当index = size-1,true.
  */
 
+#include <iostream>
+#include <vector>
+#include <unordered_set>
+
+using namespace std;
+
 class Solution {
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
-        
+        unordered_set<string> dict(wordDict.begin(), wordDict.end());
+        int size = s.size();
+        if(wordDict.size() == 0) return false;
+        vector<bool> dp(size+1, false); 
+        dp[0] = true;
+        //the length of s
+        for(int i=1; i<=size; ++i){
+            //select start index
+            for(int j=i-1; j>=0; --j){
+                if(dp[j]){
+                    string tmp = s.substr(j, i-j);
+                    if(dict.find(tmp) != dict.end()){
+                        dp[i] = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return dp[s.size()];
     }
 };
