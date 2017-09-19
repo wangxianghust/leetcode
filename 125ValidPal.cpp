@@ -10,6 +10,19 @@ using namespace std;
 class Solution {
 public:
     bool isPalindrome(string s) {
-        
+       int size = s.size();
+       int start = 0; 
+       int end = size - 1;
+       while(start < end){
+           while( (start < end) && !isalnum(s[start]) ) ++start;
+           while( (start < end) && !isalnum(s[end]) ) --end;
+           if(toupper(s[start]) != toupper(s[end])){
+               return false;
+           } else {
+               ++start;
+               --end;
+           }
+       }
+       return true;
     }
 };
